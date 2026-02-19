@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detached Scrollbar — Live Demo</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0e0e12;
+    color: #e8e6e3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 40px 20px;
+  }
+
+  h1 { text-align: center; font-size: 24px; font-weight: 500; margin-bottom: 6px; }
+  .subtitle { text-align: center; color: #6e6a65; font-size: 14px; margin-bottom: 12px; }
+  .gh-link {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 13px;
+  }
+  .gh-link a {
+    color: #d4a056;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,160,86,0.3);
+  }
+  .gh-link a:hover { border-bottom-color: #d4a056; }
+  h2 { font-size: 16px; font-weight: 500; color: #8a857e; margin-bottom: 16px; letter-spacing: 0.5px; }
+
+  /* ── Shared scrollbar styles ────────────────────────── */
+  .ds-track {
+    height: 30px;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .ds-track-rail {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-radius: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+  }
+  .ds-thumb {
+    height: 30px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: grab;
+  }
+  .ds-thumb:active { cursor: grabbing; }
+  .ds-thumb-bar {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    border-radius: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: height 0.15s;
+  }
+  .ds-thumb:hover .ds-thumb-bar,
+  .ds-thumb:active .ds-thumb-bar { height: 6px; }
+  .ds-thumb:focus-visible { outline: none; }
+  .ds-thumb:focus-visible .ds-thumb-bar {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  /* ── Demo 1: Horizontal image gallery ───────────────── */
+  .demo { max-width: 900px; margin: 0 auto 60px; }
+
+  .demo-1 .ds-thumb-bar { background: linear-gradient(90deg, #d4a056, #c2785c); }
+  .demo-1 .ds-thumb:focus-visible .ds-thumb-bar { outline-color: #d4a056; }
+
+  .gallery-viewport {
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    height: 200px;
+  }
+  .gallery-strip {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    top: 0;
+    left: 0;
+  }
+  .gallery-card {
+    flex-shrink: 0;
+    width: 280px;
+    height: 200px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  }
+
+  /* ── Demo 2: Vertical scrollbar ─────────────────────── */
+  .demo-2 .ds-thumb-bar { background: linear-gradient(180deg, #5c8dc2, #7b9ea8); }
+  .demo-2 .ds-thumb:focus-visible .ds-thumb-bar { outline-color: #5c8dc2; }
+
+  .vertical-layout {
+    display: flex;
+    gap: 16px;
+  }
+  .vertical-track {
+    width: 30px;
+    height: 300px;
+    flex-shrink: 0;
+  }
+  .vertical-track .ds-track-rail {
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .vertical-track .ds-thumb {
+    width: 30px;
+    height: auto;
+    left: 0;
+    top: 0;
+  }
+  .vertical-track .ds-thumb-bar {
+    width: 4px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 40px;
+  }
+  .vertical-track .ds-thumb:hover .ds-thumb-bar,
+  .vertical-track .ds-thumb:active .ds-thumb-bar {
+    width: 6px;
+    height: 100%;
+  }
+  .text-viewport {
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    flex-grow: 1;
+    border-radius: 8px;
+    background: #161619;
+    padding: 20px;
+  }
+  .text-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    line-height: 1.8;
+    font-size: 15px;
+    color: #aaa;
+  }
+  .text-content p { margin-bottom: 16px; }
+  .text-content strong { color: #e8e6e3; }
+
+  /* ── Demo 3: Multi-content with callbacks ───────────── */
+  .demo-3 .ds-thumb-bar { background: linear-gradient(90deg, #7da86b, #a68a5b); }
+  .demo-3 .ds-thumb:focus-visible .ds-thumb-bar { outline-color: #7da86b; }
+
+  .multi-viewport {
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    height: 110px;
+    margin-bottom: 8px;
+  }
+  .multi-strip {
+    position: absolute;
+    display: flex;
+    gap: 8px;
+    top: 0;
+    left: 0;
+  }
+  .multi-card {
+    flex-shrink: 0;
+    width: 160px;
+    height: 110px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 14px;
+    font-size: 13px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .callback-log {
+    margin-top: 12px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 11px;
+    color: #4a4a4e;
+    height: 20px;
+    overflow: hidden;
+  }
+
+  /* ── Controls ───────────────────────────────────────── */
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .controls button {
+    background: transparent;
+    color: #6e6a65;
+    border: 1px solid #2a2a2e;
+    border-radius: 5px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .controls button:hover { color: #e8e6e3; border-color: #444; }
+
+  /* ── Install snippet ────────────────────────────────── */
+  .install {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    text-align: center;
+  }
+  .install code {
+    display: inline-block;
+    background: #161619;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 14px;
+    color: #d4a056;
+    border: 1px solid #2a2a2e;
+  }
+</style>
+</head>
+<body>
+
+<h1>Detached Scrollbar</h1>
+<p class="subtitle">A custom scrollbar decoupled from the element it scrolls. Zero dependencies. ~2 KB.</p>
+<p class="gh-link"><a href="https://github.com/firasdeveloper/detached-scrollbar">View on GitHub</a></p>
+
+<div class="install">
+  <code>npm install detached-scrollbar</code>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     DEMO 1 — Horizontal image gallery
+     ═══════════════════════════════════════════════════════ -->
+<div class="demo demo-1">
+  <h2>Horizontal Gallery</h2>
+
+  <div class="ds-track" id="d1-track">
+    <div class="ds-track-rail"></div>
+    <div class="ds-thumb" id="d1-thumb"><div class="ds-thumb-bar"></div></div>
+  </div>
+
+  <div class="gallery-viewport" id="d1-viewport">
+    <div class="gallery-strip" id="d1-content"></div>
+  </div>
+
+  <div class="controls">
+    <button onclick="d1.scrollTo(0)">Start</button>
+    <button onclick="d1.scrollTo(0.5)">Middle</button>
+    <button onclick="d1.scrollTo(1)">End</button>
+    <button onclick="d1.focus()">Focus scrollbar</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     DEMO 2 — Vertical text scroll
+     ═══════════════════════════════════════════════════════ -->
+<div class="demo demo-2">
+  <h2>Vertical Text</h2>
+
+  <div class="vertical-layout">
+    <div class="ds-track vertical-track" id="d2-track">
+      <div class="ds-track-rail"></div>
+      <div class="ds-thumb" id="d2-thumb"><div class="ds-thumb-bar"></div></div>
+    </div>
+
+    <div class="text-viewport" id="d2-viewport">
+      <div class="text-content" id="d2-content">
+        <p><strong>The Detached Scrollbar Pattern</strong></p>
+        <p>A detached scrollbar is a scrollbar that lives in a completely separate part of the DOM from the content it controls. The two are linked by a single shared value: a ratio between 0 and 1.</p>
+        <p>When the user drags the thumb, the ratio is derived from the thumb's position. That ratio is then applied to compute the content's offset. The content doesn't "scroll" in the native sense — it's absolutely positioned, and its top or left property is updated.</p>
+        <p><strong>The Two Equations</strong></p>
+        <p>thumbPosition = ratio * (trackSize - thumbSize)</p>
+        <p>contentPosition = -ratio * (contentSize - viewportSize)</p>
+        <p>These two equations are the entire scrollbar. Every feature — dragging, keyboard navigation, programmatic scrolling, resize handling — is just these equations applied from different starting points.</p>
+        <p><strong>Why Not Native?</strong></p>
+        <p>Native scrollbars are attached to the element they scroll. You can't place them elsewhere in the DOM. You can't fully style them cross-browser. You can't animate them or control step sizes. A detached scrollbar gives you total control.</p>
+        <p><strong>Input Methods</strong></p>
+        <p>Mouse drag, touch drag, keyboard arrows, Home/End keys, and click-on-track-to-jump are all supported out of the box. The thumb receives focus on grab so keyboard works immediately after a mouse interaction.</p>
+        <p><strong>Accessibility</strong></p>
+        <p>The thumb has role="slider", aria-valuemin, aria-valuemax, and aria-valuenow attributes. It's focusable via tabindex and responds to standard keyboard patterns.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="d2.scrollTo(0)">Top</button>
+    <button onclick="d2.scrollTo(0.5)">Middle</button>
+    <button onclick="d2.scrollTo(1)">Bottom</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     DEMO 3 — Multi-content with callbacks
+     ═══════════════════════════════════════════════════════ -->
+<div class="demo demo-3">
+  <h2>Multiple Content Elements + Callbacks</h2>
+
+  <div class="ds-track" id="d3-track">
+    <div class="ds-track-rail"></div>
+    <div class="ds-thumb" id="d3-thumb"><div class="ds-thumb-bar"></div></div>
+  </div>
+
+  <div class="multi-viewport" id="d3-viewport">
+    <div class="multi-strip" id="d3-row1"></div>
+  </div>
+  <div class="multi-viewport" id="d3-viewport2">
+    <div class="multi-strip" id="d3-row2"></div>
+  </div>
+
+  <div class="callback-log" id="d3-log">Drag the scrollbar to see callbacks fire...</div>
+
+  <div class="controls">
+    <button onclick="d3.scrollTo(0)">Start</button>
+    <button onclick="d3.scrollTo(1)">End</button>
+    <button onclick="d3.update()">Recalculate (.update)</button>
+    <button onclick="d3.destroy(); document.getElementById('d3-log').textContent='destroyed — scrollbar is inert now';">Destroy</button>
+  </div>
+</div>
+
+<script type="module">
+import { DetachedScrollbar } from './detached-scrollbar.js';
+
+// ── Demo 1: Gallery ──────────────────────────────────────
+
+const colors = ['#2d1f1a','#1a2d24','#1a1f2d','#2d1a2a','#2d2a1a','#1a2a2d','#231a2d','#2d1a1a'];
+const labels = [
+  'Mountain Sunrise', 'Tropical Canopy', 'Ocean Depths', 'Desert Dusk',
+  'Northern Lights', 'Coral Reef', 'Misty Forest', 'Volcanic Coast',
+  'Glacier Lake', 'Starfield', 'Savanna', 'River Canyon',
+];
+const strip = document.getElementById('d1-content');
+labels.forEach((label, i) => {
+  const card = document.createElement('div');
+  card.className = 'gallery-card';
+  card.style.backgroundColor = colors[i % colors.length];
+  card.textContent = label;
+  strip.appendChild(card);
+});
+
+const d1 = new DetachedScrollbar({
+  track: '#d1-track',
+  thumb: '#d1-thumb',
+  content: '#d1-content',
+  viewport: '#d1-viewport',
+});
+d1.focus();
+window.d1 = d1;
+
+// ── Demo 2: Vertical ────────────────────────────────────
+
+const d2 = new DetachedScrollbar({
+  track: '#d2-track',
+  thumb: '#d2-thumb',
+  content: '#d2-content',
+  viewport: '#d2-viewport',
+  direction: 'vertical',
+  keyboardSteps: 40,
+});
+window.d2 = d2;
+
+// ── Demo 3: Multi-content + callbacks ───────────────────
+
+const subjects = [
+  ['Math','History','Physics','Chemistry','Biology','Art','Music','Drama','Geography','Economics','Philosophy','Literature'],
+  ['Algebra','Rome','Gravity','Bonds','Cells','Painting','Jazz','Shakespeare','Tectonics','Markets','Ethics','Poetry'],
+];
+const bgColors = ['#1a1610','#15171a','#171318','#14170f','#1a1412','#121519'];
+
+[document.getElementById('d3-row1'), document.getElementById('d3-row2')].forEach((row, ri) => {
+  subjects[ri].forEach((label, i) => {
+    const card = document.createElement('div');
+    card.className = 'multi-card';
+    card.style.backgroundColor = bgColors[i % bgColors.length];
+    card.textContent = label;
+    row.appendChild(card);
+  });
+});
+
+const log = document.getElementById('d3-log');
+const d3 = new DetachedScrollbar({
+  track: '#d3-track',
+  thumb: '#d3-thumb',
+  content: ['#d3-row1', '#d3-row2'],
+  viewport: '#d3-viewport',
+  onScroll: (ratio) => { log.textContent = `onScroll → ratio: ${ratio.toFixed(3)}`; },
+  onDragStart: () => { log.textContent = 'onDragStart'; },
+  onDragEnd: () => { log.textContent = 'onDragEnd'; },
+});
+window.d3 = d3;
+</script>
+
+</body>
+</html>

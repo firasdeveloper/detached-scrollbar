@@ -2,6 +2,10 @@
 
 A custom scrollbar that can be fully styled and placed anywhere in the DOM, decoupled from the element it scrolls.
 
+### [Live Demo](https://firasdeveloper.github.io/detached-scrollbar/)
+
+---
+
 - **Zero dependencies** — vanilla TypeScript, no runtime libraries
 - **Tiny** — ~2 KB minified + gzipped
 - **Horizontal & vertical** — one API for both directions
@@ -192,8 +196,8 @@ ratio = 1    → content at end, thumb at right/bottom edge
 Two equations power the entire system:
 
 ```
-thumbPosition   =  ratio × (trackSize − thumbSize)
-contentPosition = −ratio × (contentSize − viewportSize)
+thumbPosition   =  ratio * (trackSize - thumbSize)
+contentPosition = -ratio * (contentSize - viewportSize)
 ```
 
 Every operation — dragging, keyboard, programmatic scrolling, resize — reads or writes `ratio`, then applies these equations.
@@ -207,7 +211,7 @@ npm install
 npm run build
 ```
 
-Open `demo/index.html` in a browser to see the demo page (it imports from `dist/`).
+Open `docs/index.html` in a browser to see the live demo, or visit the [GitHub Pages demo](https://firasdeveloper.github.io/detached-scrollbar/).
 
 ## License
 
