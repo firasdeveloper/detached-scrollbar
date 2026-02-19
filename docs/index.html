@@ -69,9 +69,157 @@
     outline-offset: 4px;
   }
 
-  /* ── Demo 1: Horizontal image gallery ───────────────── */
+  /* ── Demo section ────────────────────────────────────── */
   .demo { max-width: 900px; margin: 0 auto 60px; }
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .controls button {
+    background: transparent;
+    color: #6e6a65;
+    border: 1px solid #2a2a2e;
+    border-radius: 5px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .controls button:hover { color: #e8e6e3; border-color: #444; }
+  .controls button.active {
+    border-color: #d4a056;
+    color: #d4a056;
+    background-color: rgba(212,160,86,0.08);
+  }
 
+  /* ══════════════════════════════════════════════════════
+     TIMELINE DEMO — Human Eras
+     ══════════════════════════════════════════════════════ */
+  .demo-timeline { max-width: 960px; margin: 0 auto 80px; }
+  .demo-timeline .ds-thumb-bar { background: linear-gradient(90deg, #d4a056, #c2785c); }
+  .demo-timeline .ds-thumb:focus-visible .ds-thumb-bar { outline-color: #d4a056; }
+
+  .tl-strip {
+    position: absolute;
+    display: flex;
+    gap: 20px;
+  }
+  .tl-strip-1 { top: 0; }
+  .tl-strip-2 { top: 208px; }
+
+  .tl-era-section {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .tl-viewport {
+    overflow: hidden;
+    position: relative;
+    height: 416px;
+    margin-top: 8px;
+  }
+
+  .tl-card {
+    flex-shrink: 0;
+    height: 200px;
+    border-radius: 6px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.2s, transform 0.2s;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+  .tl-card:hover {
+    border-color: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+  }
+  .tl-date {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .tl-name {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.35;
+    margin-top: 8px;
+  }
+  .tl-bottom { margin-top: auto; }
+  .tl-desc {
+    font-size: 12px;
+    color: #8a857e;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .tl-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-top: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .tl-now-marker {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .tl-now-marker-line {
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, #d4a056, transparent);
+    margin: 0 auto;
+  }
+  .tl-now-marker-label {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #d4a056;
+    white-space: nowrap;
+  }
+  .tl-now-marker-diamond {
+    width: 8px;
+    height: 8px;
+    background-color: #d4a056;
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .tl-debug {
+    margin-top: 16px;
+    font-size: 11px;
+    color: #3a3a3e;
+    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ── Demo 1: Horizontal image gallery ───────────────── */
   .demo-1 .ds-thumb-bar { background: linear-gradient(90deg, #d4a056, #c2785c); }
   .demo-1 .ds-thumb:focus-visible .ds-thumb-bar { outline-color: #d4a056; }
 
@@ -201,26 +349,6 @@
     overflow: hidden;
   }
 
-  /* ── Controls ───────────────────────────────────────── */
-  .controls {
-    display: flex;
-    gap: 8px;
-    margin-top: 14px;
-    flex-wrap: wrap;
-  }
-  .controls button {
-    background: transparent;
-    color: #6e6a65;
-    border: 1px solid #2a2a2e;
-    border-radius: 5px;
-    padding: 6px 14px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: inherit;
-  }
-  .controls button:hover { color: #e8e6e3; border-color: #444; }
-
   /* ── Install snippet ────────────────────────────────── */
   .install {
     max-width: 900px;
@@ -237,6 +365,14 @@
     color: #d4a056;
     border: 1px solid #2a2a2e;
   }
+
+  /* ── Section divider ────────────────────────────────── */
+  .section-divider {
+    max-width: 900px;
+    margin: 0 auto 50px;
+    border: none;
+    border-top: 1px solid #1e1e22;
+  }
 </style>
 </head>
 <body>
@@ -248,6 +384,42 @@
 <div class="install">
   <code>npm install detached-scrollbar</code>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SHOWCASE — Human Eras Timeline
+     ═══════════════════════════════════════════════════════ -->
+<div class="demo demo-timeline">
+  <h2>Human Eras Timeline</h2>
+
+  <div class="ds-track" id="tl-track">
+    <div class="ds-track-rail"></div>
+    <div class="ds-thumb" id="tl-thumb"><div class="ds-thumb-bar"></div></div>
+  </div>
+
+  <div class="tl-viewport" id="tl-viewport">
+    <div class="tl-strip tl-strip-1" id="tl-strip1"></div>
+    <div class="tl-strip tl-strip-2" id="tl-strip2"></div>
+
+    <div class="tl-now-marker" id="tl-marker">
+      <div class="tl-now-marker-label">You Are Here</div>
+      <div class="tl-now-marker-diamond"></div>
+      <div class="tl-now-marker-line"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="tlScrollTo(0)">Beginning of Time</button>
+    <button onclick="tlScrollToMarker()" class="active">You Are Here</button>
+    <button onclick="tlScrollTo(1)">Far Future</button>
+  </div>
+
+  <div class="tl-debug">
+    <span id="tl-debug-ratio">ratio: 0.000</span>
+    <span id="tl-debug-pos">position: 0px</span>
+  </div>
+</div>
+
+<hr class="section-divider">
 
 <!-- ═══════════════════════════════════════════════════════
      DEMO 1 — Horizontal image gallery
@@ -341,6 +513,282 @@
 <script type="module">
 import { DetachedScrollbar } from './detached-scrollbar.js';
 
+// ══════════════════════════════════════════════════════════
+// TIMELINE DEMO — Human Eras
+// ══════════════════════════════════════════════════════════
+
+const palettes = {
+  prehistoric: { bg: '#1a1610', accent: '#a68a5b', tag: 'rgba(166,138,91,0.15)', tagText: '#a68a5b' },
+  ancient:     { bg: '#15171a', accent: '#7b9ea8', tag: 'rgba(123,158,168,0.15)', tagText: '#7b9ea8' },
+  classical:   { bg: '#171318', accent: '#a87ba8', tag: 'rgba(168,123,168,0.15)', tagText: '#a87ba8' },
+  medieval:    { bg: '#14170f', accent: '#7da86b', tag: 'rgba(125,168,107,0.15)', tagText: '#7da86b' },
+  early:       { bg: '#1a1412', accent: '#c2785c', tag: 'rgba(194,120,92,0.15)', tagText: '#c2785c' },
+  modern:      { bg: '#121519', accent: '#5c8dc2', tag: 'rgba(92,141,194,0.15)', tagText: '#5c8dc2' },
+  future:      { bg: '#13121a', accent: '#8b7bc2', tag: 'rgba(139,123,194,0.15)', tagText: '#8b7bc2' },
+};
+
+const civilizationEras = [
+  { date: "~3,000,000 BC", name: "Stone Age Begins", desc: "Early hominids craft the first stone tools in East Africa, marking the dawn of human technology.", category: "prehistoric", span: "3M years" },
+  { date: "~300,000 BC", name: "Emergence of Homo Sapiens", desc: "Anatomically modern humans appear in Africa. Language, art, and symbolic thought slowly develop.", category: "prehistoric", span: "250K years" },
+  { date: "~50,000 BC", name: "The Great Migration", desc: "Humans cross out of Africa into every continent. Cave paintings appear in Europe and Indonesia.", category: "prehistoric", span: "40K years" },
+  { date: "~10,000 BC", name: "Agricultural Revolution", desc: "Farming begins in the Fertile Crescent. Settlements replace nomadic life. Populations surge.", category: "prehistoric", span: "4,000 years" },
+  { date: "~6,000 BC", name: "First Cities", desc: "Uruk, Eridu, and Catalhoyuk grow into the world's first urban centers with thousands of inhabitants.", category: "ancient", span: "2,500 years" },
+  { date: "~3,500 BC", name: "Invention of Writing", desc: "Cuneiform in Sumer and hieroglyphs in Egypt. History can now be recorded, not just remembered.", category: "ancient", span: "1,000 years" },
+  { date: "~2,560 BC", name: "Great Pyramid of Giza", desc: "The largest pyramid ever built. 2.3 million stone blocks assembled with astounding precision.", category: "ancient", span: "20 years" },
+  { date: "~1,750 BC", name: "Code of Hammurabi", desc: "One of the earliest written legal codes. 282 laws carved in stone governing Babylonian society.", category: "ancient", span: "200 years" },
+  { date: "~800 BC", name: "Rise of Ancient Greece", desc: "City-states, democracy, philosophy, and the Olympic Games emerge around the Aegean.", category: "classical", span: "500 years" },
+  { date: "~500 BC", name: "Classical Golden Ages", desc: "Confucius in China, Buddha in India, Socrates in Greece. A simultaneous flowering of thought across civilizations.", category: "classical", span: "200 years" },
+  { date: "~323 BC", name: "Alexander's Empire", desc: "Alexander the Great conquers from Greece to India, blending cultures across the known world.", category: "classical", span: "13 years" },
+  { date: "27 BC", name: "Roman Empire Founded", desc: "Augustus becomes the first emperor. Rome will dominate the Mediterranean for five centuries.", category: "classical", span: "500 years" },
+  { date: "~105 AD", name: "Paper Invented in China", desc: "Cai Lun refines papermaking. Knowledge becomes portable, storable, shareable.", category: "classical", span: "\u2014" },
+  { date: "476 AD", name: "Fall of Rome", desc: "The Western Roman Empire collapses. Europe fragments into feudal kingdoms. The Middle Ages begin.", category: "medieval", span: "\u2014" },
+  { date: "~800 AD", name: "Islamic Golden Age", desc: "Baghdad's House of Wisdom preserves and advances science, math, medicine, and astronomy.", category: "medieval", span: "500 years" },
+  { date: "1066 AD", name: "Norman Conquest", desc: "William the Conqueror takes England. Feudalism entrenches across Europe.", category: "medieval", span: "\u2014" },
+  { date: "~1200 AD", name: "Mongol Empire", desc: "Genghis Khan unites the steppe. The largest contiguous land empire in history reshapes Eurasia.", category: "medieval", span: "150 years" },
+  { date: "1347 AD", name: "The Black Death", desc: "Bubonic plague kills a third of Europe. Labor shortages reshape economies and power structures.", category: "medieval", span: "7 years" },
+  { date: "1299 AD", name: "Ottoman Empire", desc: "From Anatolian frontier state to superpower spanning three continents. Constantinople falls in 1453. Six centuries of rule.", category: "early", span: "623 years" },
+  { date: "~1440 AD", name: "Gutenberg's Press", desc: "Movable type transforms Europe. Books go from rare luxury to mass medium in decades.", category: "early", span: "\u2014" },
+  { date: "1492 AD", name: "Columbus Reaches the Americas", desc: "The Old World and New World collide. Global trade, colonization, and cultural exchange begin.", category: "early", span: "\u2014" },
+  { date: "~1687 AD", name: "Newton's Principia", desc: "Laws of motion and universal gravitation published. The Scientific Revolution reaches its peak.", category: "early", span: "\u2014" },
+  { date: "1776 AD", name: "American Revolution", desc: "Thirteen colonies declare independence. The idea of democratic self-governance spreads worldwide.", category: "early", span: "7 years" },
+  { date: "1789 AD", name: "French Revolution", desc: "Liberty, equality, fraternity. Monarchy falls, and the modern concept of the nation-state is born.", category: "early", span: "10 years" },
+  { date: "~1760 AD", name: "Industrial Revolution", desc: "Steam power, factories, railways. The world shifts from agrarian life to urban industrial economies.", category: "modern", span: "100 years" },
+  { date: "1903 AD", name: "First Powered Flight", desc: "The Wright brothers fly 120 feet at Kitty Hawk. Sixty-six years later, humans land on the Moon.", category: "modern", span: "\u2014" },
+  { date: "1914\u20131945", name: "The World Wars", desc: "Two global conflicts reshape borders, technology, and the human conscience. The atomic age dawns.", category: "modern", span: "31 years" },
+  { date: "1969 AD", name: "Moon Landing", desc: "Apollo 11. Neil Armstrong steps onto the lunar surface. 'One small step for man...'", category: "modern", span: "\u2014" },
+  { date: "1991 AD", name: "The World Wide Web", desc: "Tim Berners-Lee publishes the first website. Information becomes borderless and instant.", category: "modern", span: "\u2014" },
+  { date: "2020s", name: "Age of AI", desc: "Large language models, gene editing, quantum computing. Humanity builds tools that reshape thought itself.", category: "modern", span: "ongoing" },
+  { date: "~2050", name: "Climate Crossroads", desc: "The decisions of this decade determine the planet's trajectory for centuries to come.", category: "future", span: "projected" },
+  { date: "~2100", name: "Post-Scarcity Horizons", desc: "Fusion energy, space habitats, and synthetic biology could redefine what it means to live.", category: "future", span: "projected" },
+  { date: "~2200+", name: "Interplanetary Civilization", desc: "Permanent settlements beyond Earth. Mars, the asteroids, and the outer moons become new frontiers.", category: "future", span: "speculative" },
+  { date: "~10,000+", name: "Deep Future", desc: "The Long Now. What survives? What endures? The story continues far beyond any single era.", category: "future", span: "open-ended" },
+];
+
+const technologyEras = [
+  { date: "~3,000,000 BC", name: "Oldowan Stone Tools", desc: "Crude choppers and flakes \u2014 the first technology, passed from generation to generation.", category: "prehistoric", span: "2.4M years" },
+  { date: "~500,000 BC", name: "Control of Fire", desc: "Cooking, warmth, protection. Fire transforms diet, extends the day, and reshapes social life.", category: "prehistoric", span: "\u2014" },
+  { date: "~40,000 BC", name: "Cave Art & Symbolism", desc: "Lascaux, Altamira, Sulawesi. The first visual records of the human imagination.", category: "prehistoric", span: "30K years" },
+  { date: "~8,000 BC", name: "Pottery & Ceramics", desc: "Fired clay vessels allow storage, trade, and new forms of cooking across early settlements.", category: "prehistoric", span: "\u2014" },
+  { date: "~5,500 BC", name: "The Wheel", desc: "First used for pottery, then transport. A deceptively simple invention that changed everything.", category: "ancient", span: "\u2014" },
+  { date: "~3,300 BC", name: "Bronze Metallurgy", desc: "Copper and tin smelted together. Harder tools, better weapons, new trade networks.", category: "ancient", span: "2,000 years" },
+  { date: "~1,500 BC", name: "Iron Working", desc: "Cheaper and harder than bronze. Iron democratizes toolmaking and transforms warfare.", category: "ancient", span: "\u2014" },
+  { date: "~300 BC", name: "Archimedes' Machines", desc: "The lever, the screw, the compound pulley. Engineering principles codified for the first time.", category: "classical", span: "\u2014" },
+  { date: "~100 BC", name: "Antikythera Mechanism", desc: "An ancient Greek analog computer that predicted astronomical positions decades in advance.", category: "classical", span: "\u2014" },
+  { date: "~100 AD", name: "Roman Concrete", desc: "Opus caementicium. The Pantheon still stands \u2014 stronger after 2,000 years than the day it was poured.", category: "classical", span: "500 years" },
+  { date: "~600 AD", name: "Windmills in Persia", desc: "Harnessing wind for grinding grain. Energy capture beyond muscle and water.", category: "medieval", span: "\u2014" },
+  { date: "~820 AD", name: "Algebra \u2014 Al-Khwarizmi", desc: "Al-Kitab al-Mukhtasar. The father of algebra formalizes equations and gives us the word 'algorithm'.", category: "medieval", span: "\u2014" },
+  { date: "~830 AD", name: "First Public Hospitals", desc: "Bimaristans in Baghdad offer free care to all. Separate wards, patient records, and pharmacies \u2014 centuries before Europe.", category: "medieval", span: "\u2014" },
+  { date: "~850 AD", name: "Gunpowder in China", desc: "Originally for fireworks and alchemy. Gradually weaponized. The world's first chemical explosive.", category: "medieval", span: "\u2014" },
+  { date: "~900 AD", name: "Medicine \u2014 Al-Razi", desc: "Al-Hawi: a 23-volume medical encyclopedia. First to distinguish smallpox from measles. Pioneer of clinical observation.", category: "medieval", span: "\u2014" },
+  { date: "~964 AD", name: "Book of Fixed Stars", desc: "Al-Sufi's star catalogue maps the heavens with unprecedented precision. First record of the Andromeda galaxy.", category: "medieval", span: "\u2014" },
+  { date: "~1000 AD", name: "Optics \u2014 Ibn al-Haytham", desc: "Kitab al-Manazir. The scientific method applied to light. Vision comes from eyes receiving light, not emitting it.", category: "medieval", span: "\u2014" },
+  { date: "~1000 AD", name: "Surgery \u2014 Al-Zahrawi", desc: "Kitab al-Tasrif: 30 volumes on surgery. Invented over 200 surgical instruments including scalpels, forceps, and catgut sutures.", category: "medieval", span: "\u2014" },
+  { date: "~1000 AD", name: "Magnetic Compass", desc: "Chinese navigators use lodestone for orientation. Oceanic exploration becomes possible.", category: "medieval", span: "\u2014" },
+  { date: "~1025 AD", name: "Canon of Medicine \u2014 Ibn Sina", desc: "Al-Qanun fi al-Tibb. The standard medical textbook in Europe and the Islamic world for over 600 years.", category: "medieval", span: "600 years" },
+  { date: "~1154 AD", name: "World Map \u2014 Al-Idrisi", desc: "Tabula Rogeriana. The most accurate world map of the medieval era, compiled over 15 years of research.", category: "medieval", span: "\u2014" },
+  { date: "~1206 AD", name: "Automata \u2014 Al-Jazari", desc: "The Book of Ingenious Devices. Programmable machines, crankshafts, and water clocks centuries ahead of Europe.", category: "medieval", span: "\u2014" },
+  { date: "~1280 AD", name: "Eyeglasses", desc: "Invented in Italy. Extended the productive years of scholars and craftspeople by decades.", category: "medieval", span: "\u2014" },
+  { date: "~1440 AD", name: "Movable Type Printing", desc: "Gutenberg's press. A single invention that triggered the Reformation, the Renaissance, and modern science.", category: "early", span: "\u2014" },
+  { date: "1608 AD", name: "The Telescope", desc: "Galileo points it at the sky. Jupiter's moons, Saturn's rings, the phases of Venus revealed.", category: "early", span: "\u2014" },
+  { date: "1712 AD", name: "Newcomen Steam Engine", desc: "The first practical steam engine. Pumps mines dry. Later refined by Watt to power the world.", category: "early", span: "\u2014" },
+  { date: "1837 AD", name: "The Telegraph", desc: "Morse code over wire. For the first time, a message travels faster than a human can carry it.", category: "modern", span: "\u2014" },
+  { date: "1876 AD", name: "The Telephone", desc: "Alexander Graham Bell: 'Mr. Watson, come here.' The voice conquers distance.", category: "modern", span: "\u2014" },
+  { date: "1879 AD", name: "Electric Light", desc: "Edison's incandescent bulb. Night becomes optional. Cities glow. Shift work begins.", category: "modern", span: "\u2014" },
+  { date: "1903 AD", name: "Powered Flight", desc: "Wright Flyer. 12 seconds at Kitty Hawk. Within a lifetime: supersonic jets and spacecraft.", category: "modern", span: "\u2014" },
+  { date: "1928 AD", name: "Penicillin", desc: "Alexander Fleming's accidental discovery. Bacterial infections go from fatal to treatable.", category: "modern", span: "\u2014" },
+  { date: "1945 AD", name: "Nuclear Energy", desc: "The atom split. Unimaginable power for both destruction and generation. The world holds its breath.", category: "modern", span: "\u2014" },
+  { date: "1947 AD", name: "The Transistor", desc: "Bell Labs. A tiny semiconductor switch that will become the atom of the digital age.", category: "modern", span: "\u2014" },
+  { date: "1969 AD", name: "ARPANET", desc: "Four university computers linked. The seed of the internet. 'LOGIN' \u2014 only 'LO' gets through before crash.", category: "modern", span: "\u2014" },
+  { date: "1983 AD", name: "Personal Computers", desc: "The IBM PC and Apple Macintosh put computing power on every desk, then in every pocket.", category: "modern", span: "ongoing" },
+  { date: "1991 AD", name: "World Wide Web", desc: "Hyperlinks connect all human knowledge. The browser becomes a window to everything.", category: "modern", span: "ongoing" },
+  { date: "2007 AD", name: "The Smartphone", desc: "iPhone launches. A supercomputer in every pocket. The line between online and offline dissolves.", category: "modern", span: "ongoing" },
+  { date: "2012 AD", name: "CRISPR Gene Editing", desc: "Precise, cheap genetic modification. The code of life becomes editable for the first time.", category: "modern", span: "ongoing" },
+  { date: "2022 AD", name: "Large Language Models", desc: "AI systems that write, reason, and code. The boundary between tool and collaborator blurs.", category: "modern", span: "ongoing" },
+  { date: "~2030s", name: "Quantum Computing", desc: "Qubits solve problems classical machines never could. Cryptography, materials science, drug design.", category: "future", span: "projected" },
+  { date: "~2040s", name: "Fusion Power", desc: "Commercially viable fusion. Limitless clean energy. The climate equation changes overnight.", category: "future", span: "projected" },
+  { date: "~2060s", name: "Brain-Computer Interfaces", desc: "Direct neural links. Thought becomes interface. Memory augmentation. New senses.", category: "future", span: "speculative" },
+  { date: "~2100+", name: "Technologies Unknown", desc: "Every era's most transformative inventions were unimaginable to the era before.", category: "future", span: "open-ended" },
+];
+
+// ── Compute card widths from time spans ─────────────────
+
+const MIN_CARD_WIDTH = 180;
+const LOG_SCALE = 25;
+
+function parseDuration(span) {
+  if (!span || span === '\u2014') return 1;
+  if (span === 'ongoing') return 5;
+  if (span === 'projected') return 30;
+  if (span === 'speculative') return 100;
+  if (span === 'open-ended') return 1000;
+  const cleaned = span.replace(/,/g, '');
+  const match = cleaned.match(/([\d.]+)\s*(M|K)?\s*years?/i);
+  if (!match) return 1;
+  let value = parseFloat(match[1]);
+  if (match[2]?.toUpperCase() === 'M') value *= 1000000;
+  if (match[2]?.toUpperCase() === 'K') value *= 1000;
+  return value;
+}
+
+[...civilizationEras, ...technologyEras].forEach(card => {
+  card.width = Math.round(MIN_CARD_WIDTH + LOG_SCALE * Math.log(Math.max(1, parseDuration(card.span))));
+});
+
+// ── Group by category & sync widths ─────────────────────
+
+const markerName1 = 'Age of AI';
+const markerName2 = 'Large Language Models';
+const categoryOrder = ['prehistoric', 'ancient', 'classical', 'medieval', 'early', 'modern', 'future'];
+const CARD_GAP = 8;
+
+function groupByCategory(data) {
+  const groups = {};
+  categoryOrder.forEach(c => groups[c] = []);
+  data.forEach(item => groups[item.category].push(item));
+  return groups;
+}
+
+function sectionCardsWidth(items) {
+  if (items.length === 0) return 0;
+  return items.reduce((sum, e) => sum + e.width, 0) + (items.length - 1) * CARD_GAP;
+}
+
+const civGroups = groupByCategory(civilizationEras);
+const techGroups = groupByCategory(technologyEras);
+
+const sectionWidths = {};
+categoryOrder.forEach(cat => {
+  sectionWidths[cat] = Math.max(sectionCardsWidth(civGroups[cat]), sectionCardsWidth(techGroups[cat]));
+});
+
+function computeAdjustedWidths(groups) {
+  const adjusted = {};
+  categoryOrder.forEach(cat => {
+    const cards = groups[cat];
+    if (cards.length === 0) { adjusted[cat] = []; return; }
+    const totalGaps = (cards.length - 1) * CARD_GAP;
+    const naturalCardWidths = cards.reduce((sum, c) => sum + c.width, 0);
+    const targetCardWidths = sectionWidths[cat] - totalGaps;
+    const scale = naturalCardWidths > 0 ? targetCardWidths / naturalCardWidths : 1;
+    adjusted[cat] = cards.map(c => Math.round(c.width * scale));
+  });
+  return adjusted;
+}
+
+const civAdjusted = computeAdjustedWidths(civGroups);
+const techAdjusted = computeAdjustedWidths(techGroups);
+
+// ── Build cards ─────────────────────────────────────────
+
+function buildSyncedCards(container, groups, adjustedWidths, highlightName) {
+  categoryOrder.forEach(cat => {
+    const section = document.createElement('div');
+    section.className = 'tl-era-section';
+    section.style.width = sectionWidths[cat] + 'px';
+
+    groups[cat].forEach((era, i) => {
+      const p = palettes[era.category];
+      const card = document.createElement('div');
+      card.className = 'tl-card';
+      card.style.width = adjustedWidths[cat][i] + 'px';
+      card.style.backgroundColor = p.bg;
+
+      if (era.name === highlightName) {
+        card.style.borderColor = p.accent;
+        card.style.boxShadow = `0 0 20px ${p.accent}33`;
+      }
+
+      card.innerHTML = `
+        <div>
+          <div class="tl-date" style="color:${p.accent}">${era.date}</div>
+          <div class="tl-name">${era.name}</div>
+        </div>
+        <div class="tl-bottom">
+          <div class="tl-desc">${era.desc}</div>
+          <span class="tl-tag" style="background:${p.tag};color:${p.tagText}">${era.span}</span>
+        </div>
+      `;
+      section.appendChild(card);
+    });
+
+    container.appendChild(section);
+  });
+}
+
+const tlStrip1 = document.getElementById('tl-strip1');
+const tlStrip2 = document.getElementById('tl-strip2');
+buildSyncedCards(tlStrip1, civGroups, civAdjusted, markerName1);
+buildSyncedCards(tlStrip2, techGroups, techAdjusted, markerName2);
+
+// ── Marker offset ───────────────────────────────────────
+
+const SECTION_GAP = 20;
+
+function markerOffset() {
+  let offset = 0;
+  for (const cat of categoryOrder) {
+    if (cat === 'modern') {
+      const cards = civGroups['modern'];
+      const widths = civAdjusted['modern'];
+      for (let i = 0; i < cards.length; i++) {
+        if (cards[i].name === markerName1) {
+          for (let j = 0; j < i; j++) {
+            offset += widths[j] + CARD_GAP;
+          }
+          offset += widths[i] / 2;
+          return offset;
+        }
+      }
+      break;
+    }
+    offset += sectionWidths[cat] + SECTION_GAP;
+  }
+  return offset;
+}
+
+const tlMarkerPx = markerOffset();
+const tlMarker = document.getElementById('tl-marker');
+const tlViewport = document.getElementById('tl-viewport');
+const tlDebugRatio = document.getElementById('tl-debug-ratio');
+const tlDebugPos = document.getElementById('tl-debug-pos');
+
+// ── Instantiate DetachedScrollbar ───────────────────────
+
+const tl = new DetachedScrollbar({
+  track: '#tl-track',
+  thumb: '#tl-thumb',
+  content: ['#tl-strip1', '#tl-strip2'],
+  viewport: '#tl-viewport',
+  keyboardSteps: 50,
+  onScroll: (ratio) => {
+    const contentLeft = -ratio * (tlStrip1.scrollWidth - tlViewport.offsetWidth);
+    tlMarker.style.left = (tlMarkerPx + contentLeft) + 'px';
+    tlDebugRatio.textContent = `ratio: ${ratio.toFixed(3)}`;
+    tlDebugPos.textContent = `position: ${Math.round(contentLeft)}px`;
+  },
+});
+
+// Scroll to the "You Are Here" marker on load
+tl.scrollToOffset(tlMarkerPx);
+tl.focus();
+window.tl = tl;
+
+// Update marker position after initial scroll
+{
+  const contentLeft = -tl.ratio * (tlStrip1.scrollWidth - tlViewport.offsetWidth);
+  tlMarker.style.left = (tlMarkerPx + contentLeft) + 'px';
+  tlDebugRatio.textContent = `ratio: ${tl.ratio.toFixed(3)}`;
+  tlDebugPos.textContent = `position: ${Math.round(contentLeft)}px`;
+}
+
+window.tlScrollTo = (ratio) => {
+  tl.scrollTo(ratio);
+};
+
+window.tlScrollToMarker = () => {
+  tl.scrollToOffset(tlMarkerPx);
+};
+
 // ── Demo 1: Gallery ──────────────────────────────────────
 
 const colors = ['#2d1f1a','#1a2d24','#1a1f2d','#2d1a2a','#2d2a1a','#1a2a2d','#231a2d','#2d1a1a'];
@@ -364,7 +812,6 @@ const d1 = new DetachedScrollbar({
   content: '#d1-content',
   viewport: '#d1-viewport',
 });
-d1.focus();
 window.d1 = d1;
 
 // ── Demo 2: Vertical ────────────────────────────────────
@@ -403,7 +850,7 @@ const d3 = new DetachedScrollbar({
   thumb: '#d3-thumb',
   content: ['#d3-row1', '#d3-row2'],
   viewport: '#d3-viewport',
-  onScroll: (ratio) => { log.textContent = `onScroll → ratio: ${ratio.toFixed(3)}`; },
+  onScroll: (ratio) => { log.textContent = `onScroll \u2192 ratio: ${ratio.toFixed(3)}`; },
   onDragStart: () => { log.textContent = 'onDragStart'; },
   onDragEnd: () => { log.textContent = 'onDragEnd'; },
 });
